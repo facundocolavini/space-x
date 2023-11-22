@@ -1,14 +1,19 @@
 ---
+import type { Doc } from 'src/types/api';
 import CardLaunch from '../components/CardLaunch.astro';
 import { getLastestLaunches } from '../services/spacex.services.ts';
 
-const launches = await getLastestLaunches();
+interface Props{
+    launches: Doc[];
+}
 
---- 
+
+const {launches} = Astro.props;
+---
 
 <div class="grid gap-8  my-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
     {
-        launches.map(({id,name, details,flight_number:flightNumber,links,success}) =>(
+        (launches).map(({id,name, details,flight_number:flightNumber,links,success}: Doc) =>(
             <CardLaunch 
                 id={id} 
                 name={name} 

@@ -20,7 +20,6 @@ if (id){
     const launches = await getLastestLaunches();
     return launches.map(launch => ({params: {id: launch.id}}))  
  } */
-    
 ---
 
 <Layout title={`Lanzamiento ${id}`}>

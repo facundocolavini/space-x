@@ -1,21 +1,35 @@
-import { IconSearch } from "./Icons/IconSearch";
+// Search.tsx
 
-export default function Search() {
-    return (
-      <div className="flex items-center justify-center">
-        <div className="flex items-center border border-gray-300 rounded-md shadow-sm">
-          <input
-            type="text"
-            name="search"
-            id="search"
-            className="block w-full p-2 border-0 rounded-md rounded-r-none focus:ring-0 focus:border-gray-300 placeholder-gray-500"
-            placeholder="Search"
-          />
-          <button className="flex items-center justify-center px-4  border-gray-300 rounded-md rounded-l-none hover:bg-gray-100">
-            <IconSearch className="bg-transparent" />
-          </button>
-        </div>
-      </div>
+import React, { useState } from 'react';
+import type { Doc } from 'src/types/api';
 
-    )
-  }
+interface SearchProps {
+  setFilteredLaunches: React.Dispatch<React.SetStateAction<Doc[]>>;
+  allLaunches: Doc[];
+}
+
+const Search: React.FC<SearchProps> = ({ setFilteredLaunches, allLaunches }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    const filtered = allLaunches.filter((launch) =>
+      launch.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setFilteredLaunches(filtered);
+  };
+
+  return (
+    <div className="my-4">
+      <input
+        type="text"
+        placeholder="Buscar por nombre..."
+        value={searchTerm}
+        onChange={handleSearch}
+        className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-blue-500"
+      />
+    </div>
+  );
+};
+
+export default Search;

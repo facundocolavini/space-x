@@ -1,10 +1,18 @@
 ---
+import Search from "@components/Search";
 import Launches from "../components/Launches.astro";
 import Layout from "../layouts/Layout.astro";
+import { getLastestLaunches} from "../services/spacex.services";
+
 const pageTitle = "Matías Szpira Bienes Raíces";
+
+
+const launches = await getLastestLaunches('FalconSat');
+
+console.log(launches);
 ---
 
 <Layout title={pageTitle}>
     <!-- Listado de Lanzamientos -->
-		<Launches />
+  <Launches  launches={launches}/>
 </Layout>
