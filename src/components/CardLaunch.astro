@@ -1,0 +1,36 @@
+---
+interface Props {
+    id: string;
+    name: string;
+    img: string;
+    success: boolean;
+    flightNumber:number;
+    details:string | null;
+}
+
+const { success, flightNumber,img,id,name, details } = Astro.props
+const successText  = success ? 'Éxito' : 'Fracaso';
+---
+
+
+<a href={`launch/${id}`}
+  class="rounded-lg border shadow lg bg-slate-300 hover:scale-105 transform transition flex flex-col" >
+    <picture class="flex justify-center">
+        <img src={img} alt={name} class="rounded-lg my-5" height=150 width=150 src={img} alt={`Lanzamiento ${id}`}/>
+    </picture>
+    <header class="p-4 flex-grow">
+        <span
+            class:list={[
+                "text-xs font-semibold mr-2 px-2.5 py-1 rounded",
+                {
+                    'bg-green-100 text-green-800' : success,
+                    'bg-red-100 text-red-800' : !success
+                }
+            ]}
+        >{successText}</span>
+        <h2 class="my-2 text-2xl font-bold tracking-tight text-zinc-900">Vuelo #{flightNumber}</h2>
+        <p class="mb-4 font-light text-gray-950">
+            {details !== null && details?.length > 100 ? details.slice(0,100) + '...' : details} 
+        </p>
+    </header>
+</a>

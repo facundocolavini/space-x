@@ -1,0 +1,32 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import {getLaunchBy, getLastestLaunches} from '../../services/spacex.services.ts';
+
+// Hybrid para que se renderice en el servidor y en el cliente
+export const prerender = false;
+
+const { id } = Astro.params
+
+let launch;
+
+if (id){
+    launch = await getLaunchBy({id});
+}
+// Forma estatica
+// Esto sirve para cuando el usuario sabe el numero finito antes de que el usuario entre.
+// Una tienda de 50 productos se sabe que son 50 productos, pero si son 50.000 no se puede hacer esto
+// Ventajas es su velocidad. Lo malo es que si son muchas no tiene sentido.
+/* export async function  getStaticPaths(){
+    const launches = await getLastestLaunches();
+    return launches.map(launch => ({params: {id: launch.id}}))  
+ } */
+    
+---
+
+<Layout title={`Lanzamiento ${id}`}>
+    <article class=" my-8 px-5 flex gap-y-4 flex-col">
+        <img transition:animate="slide" class="w-52 h-auto" src={launch?.links.patch.small} alt={launch?.name}/>
+        <h2 class="text-4xl font-bold">{launch?.name}</h2>
+        <p class="text-lg">{launch?.details}</p>
+    </article>
+</Layout>

@@ -1,0 +1,9 @@
+---
+const { href } = Astro.props;
+---
+
+<a href={href} class="flex flex-row gap-1 justify-center  cursor-pointer focus:outline-none  transition-all duration-200 text-lime-600 hover:text-emerald-800">
+<slot name="before"/>
+<slot> texto por defecto </slot>
+<slot name="after"/>
+</a>
