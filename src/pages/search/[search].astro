@@ -1,8 +1,8 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import Search from "../../components/react/Search.tsx";
-import Launches from "../../components/Launches.astro";
-import { getLastestLaunches, getLaunchesByName } from "@services/spacex.services";
+import Layout from "@layouts/Layout.astro";
+import Search from "@components/react/Search.tsx";
+import Launches from "@components/Launches.astro";
+import { getLaunchesByName } from "@services/spacex.services";
 import { fade } from "astro:transitions";
 
 export const prerender = false;
