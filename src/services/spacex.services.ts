@@ -21,7 +21,7 @@ export const getLaunchesByName = async (name: string) => {
           'name': { '$regex': `.*${name}.*`, '$options': 'i' } // Búsqueda por nombre
         },
         options: {
-          limit: 1 // Limitar a un solo resultado
+          limit: 12 // Limitar a un solo resultado
         },
       })
     });
@@ -31,7 +31,7 @@ export const getLaunchesByName = async (name: string) => {
   };
   
 
-export const getLastestLaunches = async ( name :string = '') => {
+export const getLastestLaunches = async () => {
     const res = await fetch('https://api.spacexdata.com/v5/launches/query',
         {
             method: 'POST',
@@ -39,7 +39,7 @@ export const getLastestLaunches = async ( name :string = '') => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                query: { 'name': { '$regex': `.*${name}.*`, '$options': 'i' }},// Búsqueda por nombre,
+                query: {},// Búsqueda por nombre,
                 options: {
                     sort: {
                         date_unix: 'asc'

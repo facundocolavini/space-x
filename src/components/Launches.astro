@@ -1,27 +1,41 @@
 ---
-import type { Doc } from 'src/types/api';
-import CardLaunch from '../components/CardLaunch.astro';
-import { getLastestLaunches } from '../services/spacex.services.ts';
+import type { Doc } from "src/types/api";
+import CardLaunch from "../components/CardLaunch.astro";
+import { getLastestLaunches } from "@services/spacex.services";
 
-interface Props{
-    launches: Doc[];
+interface Props {
+  searchedLaunch?: Doc[];
 }
-
-
-const {launches} = Astro.props;
+let list;
+const { searchedLaunch } = Astro.props
+const launches = await getLastestLaunches();
+if (searchedLaunch){
+  list = searchedLaunch
+} else {
+  list = launches
+} 
 ---
 
-<div class="grid gap-8  my-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-    {
-        (launches).map(({id,name, details,flight_number:flightNumber,links,success}: Doc) =>(
-            <CardLaunch 
-                id={id} 
-                name={name} 
-                details={details} 
-                img={links.patch.small} 
-                flightNumber={flightNumber}
-                success={success}
-            />
-        ))
-    }
+<div class="grid gap-8 my-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+  {
+    list?.map(
+      ({
+        id,
+        name,
+        details,
+        flight_number: flightNumber,
+        links,
+        success,
+      }: Doc) => (
+        <CardLaunch
+          id={id}
+          name={name}
+          details={details}
+          img={links.patch.small}
+          flightNumber={flightNumber}
+          success={success}
+        />
+      )
+    )
+  }
 </div>

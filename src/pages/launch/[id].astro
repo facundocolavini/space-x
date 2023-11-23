@@ -1,6 +1,7 @@
 ---
+import { getLaunchBy } from "@services/spacex.services";
 import Layout from "../../layouts/Layout.astro";
-import {getLaunchBy, getLastestLaunches} from '../../services/spacex.services.ts';
+
 
 // Hybrid para que se renderice en el servidor y en el cliente
 export const prerender = false;

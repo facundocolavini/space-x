@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Search from "../../components/react/Search.tsx";
+import Launches from "../../components/Launches.astro";
+import { getLastestLaunches, getLaunchesByName } from "@services/spacex.services";
+import { fade } from "astro:transitions";
+
+export const prerender = false;
+
+let launches;
+
+const { search  } = Astro.params
+
+if(search){
+    launches = await getLaunchesByName(search)
+}
+
+---
+
+
+<Layout title="Busqueda de Lanzamientos">
+    <Search transition:animate={fade({ duration: '2s' })}  client:load />
+    {launches!.length === 0 ? <h1 class="text-black text-2xl my-10">No hay resultados...</h1> : (
+     
+        <Launches  searchedLaunch={launches}/>
+    )
+}
+
+</Layout>
